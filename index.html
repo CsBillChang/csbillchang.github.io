@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="常铭钰的完整简历：Go 后端与 Agent 开发，ResearchLoop、惠享生活、专业技能及论文成果。">
+  <meta name="color-scheme" content="light">
+  <title>常铭钰 · Go 后端 / Agent 开发</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body id="top">
+<a class="skip-link" href="#main">跳至简历正文</a>
+<div class="page">
+  <header class="masthead">
+    <div class="identity">
+      <p class="eyebrow">完整简历</p>
+      <h1>常铭钰</h1>
+      <p class="direction">求职意向：Go后端开发 / Agent开发</p>
+      <div class="contact"><a href="mailto:CsBillChang@163.com">CsBillChang@163.com</a><a href="tel:15343981795">15343981795</a></div>
+      <p class="github">GitHub：<a href="https://github.com/CsBillChang">github.com/CsBillChang</a></p>
+    </div>
+    <img class="portrait" src="profile-photo.png" alt="常铭钰的个人照片" width="300" height="300">
+  </header>
+  <div class="resource-bar" aria-label="简历文件">
+    <a class="primary-download" href="resume-onepage.pdf" download>下载一页投递版 <span aria-hidden="true">↗</span></a>
+    <a href="resume-full.pdf" download>下载完整 PDF <span aria-hidden="true">↓</span></a>
+    <a href="resume-full.pdf">阅读完整 PDF <span aria-hidden="true">↗</span></a>
+  </div>
+  <nav class="section-nav" aria-label="简历章节"><a href="#education">教育背景</a><a href="#projects">项目经历</a><a href="#skills">专业技能</a><a href="#papers">论文成果</a></nav>
+  <main id="main">
+    <section class="resume-section" id="education" aria-labelledby="education-heading">
+      <div class="section-heading"><span>01</span><h2 id="education-heading">教育背景</h2></div>
+      <div class="education-row"><p><strong>云南大学</strong><span>计算机应用技术</span><span>硕士</span></p><time>2024-09 -- 2027-06</time></div>
+      <div class="education-row"><p><strong>云南大学</strong><span>计算机科学与技术</span><span>学士</span></p><time>2020-09 -- 2024-06</time></div>
+      <p class="honors"><strong>荣誉与证书：</strong>英语 CET-6；蓝桥杯研究生组省三；云南省互联网+大赛省银；昆州建设工程集团奖学金。</p>
+    </section>
+<section class="resume-section" id="projects" aria-labelledby="projects-heading"><div class="section-heading"><span>02</span><h2 id="projects-heading">项目经历</h2></div>
+<article class="project"><header class="project-header"><h3>ResearchLoop 科研情报与证据研读 Agent 平台 <a class="repo" href="https://github.com/CsBillChang/ReasearchLoop">github.com/CsBillChang/ReasearchLoop</a> </h3><p class="role">架构设计 / 后端研发</p></header>
+<p>项目描述：面向持续文献跟踪与课题调研，设计并实现多智能体科研应用，通过自然语言完成需求澄清、论文发现、原文研读、跨篇比较与笔记整理，结合用户研究画像生成增量论文简报，提供可追溯的证据与研究成果。</p>
+<p class="tech"><strong>技术栈：</strong>Python / FastAPI / LangGraph / MySQL / Qdrant / BM25 / RRF / Cross-encoder / PyTorch / SSE</p>
+<h4><strong>一、多 Agent 工作流与架构设计</strong></h4>
+<ul>
+<li><strong>ReAct＋Reflection＋Memory</strong>：构建“任务分析—工具执行—观察反馈”的自主研究循环，根据研究目标与执行结果动态选择检索、研读和证据查询；通过 Reflection 补读原文、核查事实矛盾与信息缺口，结合 Memory 中的研究历史和用户偏好支撑多轮任务决策。
+</li>
+<li>多 Agent 协作架构：基于 LangGraph 编排 <strong>Supervisor—Researcher—Reviewer</strong>，分别承担规划汇合、并行取证与独立审校，配置角色独立上下文和工具白名单，通过结构化子任务传递目标、材料范围与研究发现；采用共享规则、角色职责与按需任务模式的可组合设计，统一目标解释、成果复用和交接约定，使可用任务平均端到端执行耗时降低 <strong>31.99%</strong>，平均单任务总 Token 减少 <strong>42.61%</strong>。
+</li>
+<li>反馈驱动路由：根据任务覆盖和工具观察选择补证、审校或交付，区分支持、反证与缺证；将审校绑定当前稿件及来源版本，隔离历史批评，通过<strong>精确局部修改</strong>保留非目标内容，根据补充证据、修订进展和未解决项决定继续或结束。
+</li>
+</ul>
+<h4><strong>二、工具集成与证据检索</strong></h4>
+<ul>
+<li>科研工具体系：统一接入论文搜索、全文读取、证据查询、精读总结和成果保存，通过<strong>结构化参数、角色权限</strong>及材料 ID、版本校验控制执行；针对来源限流、获取失败和解析异常执行退避、路径回退与缺口报告，保留工具结果及来源身份。
+</li>
+<li>版本化 RAG 与检索优化：按段落与 Token 边界切分论文，保留章节、页码、版本和字符偏移，支持 <strong>BM25＋Qdrant 双路召回及 RRF 融合</strong>；默认采用标题／章节定位、概念扩展和 BM25 候选筛选，通过 <strong>Cross-encoder</strong> 联合编码查询与候选片段，进行相关性评分与二次排序，使 Recall@10 由 59.82% 提升至 <strong>78.13%</strong>、MRR@24 由 0.2703 提升至 <strong>0.5400</strong>，热查询 P50／P95 耗时为 631.52／757.23 ms；通过任务授权过滤和原文读回定位回答依据。
+</li>
+</ul>
+<h4><strong>三、研究状态与分层记忆</strong></h4>
+<ul>
+<li>共享研究状态（<strong>AgentState</strong>）：统一维护研究目标、用户约束、子任务结果、证据和稿件身份，结合 MySQL 持久化任务进展，为跨 Agent 成果复用、材料交接、澄清恢复和后续执行提供统一依据。
+</li>
+<li><strong>分层 Memory</strong>：分离会话上下文、研究历史和长期画像，支持相关历史召回、自然语言偏好录入与可撤销兴趣推断；将已答澄清及来源身份纳入历史索引，支持跨会话研究条件读回，对显式偏好执行用户原文来源与逐字摘录校验；明确当前指令、显式偏好和推断兴趣的优先级，减少临时要求混入长期画像，历史记忆不继承文件写入授权。
+</li>
+<li>上下文管理与个性化追踪：采用<strong>抽取式压缩</strong>和可追溯归档管理历史消息，保留目标、约束与产物身份，通过工具按需读回原始记录；结合研究方向、已读与曝光历史生成每日论文简报，支持论文版本去重及停机后的合并补报。
+</li>
+</ul>
+<h4><strong>四、持久执行与故障恢复</strong></h4>
+<ul>
+<li>任务执行可靠性：基于 MySQL 原子领取、<strong>Worker 租约和自实现执行快照</strong>管理任务生命周期，模型响应与用量先持久化再解析，恢复时复用成功收据，对未知请求阻断盲目重发；成果保存采用版本校验、内容 hash 与幂等控制，保护已有文件并处理重复执行。
+</li>
+<li>SSE 流式交互：基于 FastAPI 与独立 Worker 解耦任务执行和页面连接，通过 SSE 推送工具进度与回答增量，利用事件序号和 <strong>Last-Event-ID</strong> 实现<strong>断线补发</strong>，支持澄清后接续与任务取消，并验证并发领取、进程中断恢复和重复保存等边界。
+</li>
+</ul>
+</article>
+<article class="project"><header class="project-header"><h3>惠享生活 · Go 本地生活服务平台 <a class="repo" href="https://github.com/CsBillChang/EnjoyLife-Platform">github.com/CsBillChang/EnjoyLife-Platform</a> </h3><p class="role">后端核心开发</p></header>
+<p>项目描述：面向本地商户与消费者，设计并实现店铺与活动查询、优惠券抢购、模拟支付、核销及退款，处理热点访问、库存竞争和履约冲突。</p>
+<p class="tech"><strong>技术栈：</strong>Go / Gin / GORM / MySQL / Redis / RabbitMQ / Ristretto / Docker Compose / pprof</p>
+<h4><strong>一、缓存架构与查询优化</strong></h4>
+<ul>
+<li>多级缓存与热点回源：构建 <strong>Ristretto＋Redis 两级缓存</strong>，通过 <strong>singleflight</strong> 合并回源；店铺采用空值缓存、随机/逻辑过期与有界刷新，活动采用固定 TTL、详情负缓存与列表版本隔离，将店铺详情查询 P95 由 33.427 ms 降至 <strong>5.179 ms</strong>，降低 <strong>84.51%</strong>。
+</li>
+<li>缓存一致性与交易隔离：将<strong>业务更新与失效任务同事务提交</strong>，通过租约重试清除当前实例 L1 与共享 Redis L2，以 TTL 兜底；下单重读 MySQL 活动状态、价格与库存，避免陈旧展示影响成交。
+</li>
+</ul>
+<h4><strong>二、抢购链路与异步成单</strong></h4>
+<ul>
+<li>Lua 准入与库存控制：通过 <strong>Redis Lua</strong> 原子校验时段、处理截止、资格与限购并预占；MySQL 事务内结合条件扣库存、<strong>用户与活动组合唯一约束</strong>和库存流水，处理重复成单与幂等回补，以代际校验隔离重建后的旧请求与补偿。
+</li>
+<li>事务消息与故障恢复：将准入状态与 <strong>Outbox</strong> 同事务保存，通过 RabbitMQ 发布确认、提交后 Ack 和<strong>幂等消费</strong>实现异步成单；结合持久请求、终态查询与扫描恢复中断，验证提交后未 Ack 的重投。
+</li>
+</ul>
+<h4><strong>三、交易履约与性能治理</strong></h4>
+<ul>
+<li>支付、核销与退款：通过条件状态流转处理重复回调、<strong>支付与关单竞争</strong>、迟到支付补偿及<strong>退款与核销冲突</strong>；结合商户归属、券状态和唯一回补记录控制副作用，支持支付、核销记录的权限过滤与游标分页。
+</li>
+<li>并发控制与分配优化：使用 Redis Lua 按活动和用户限流，结合 Prefetch、有界 Worker 与 context 管理消费并发、超时和退出；通过 <strong>pprof</strong> 分析锁等待与分配，将店铺详情响应由 map 改为结构体，使 handler 微基准由 <strong>25 降至 20 allocs/op</strong>，分配次数减少 20%。
+</li>
+</ul>
+</article>
+</section>
+<section class="resume-section" id="skills" aria-labelledby="skills-heading"><div class="section-heading"><span>03</span><h2 id="skills-heading">专业技能</h2></div>
+<ul>
+<li><strong>Go 后端：</strong>熟悉 Gin、GORM，具备接口、权限校验与业务分层开发经验；能够结合 Goroutine、context、同步原语和有界 Worker 实现并发控制，使用 pprof 分析性能问题。
+</li>
+<li><strong>Python：</strong>熟悉类型标注、异常处理与模块化开发；使用 FastAPI、Pydantic 实现接口及工具参数校验，具备工具封装、后台任务与模型实验代码开发经验。
+</li>
+<li><strong>深度学习与 LLM：</strong>熟悉 PyTorch 与 Transformer 架构，理解 Attention 机制及 MoE 专家路由原理，具备模型结构改进与训练调优经验；了解指令微调（SFT）的基本流程及 LoRA 参数高效微调方法。
+</li>
+<li><strong>Agent 开发：</strong>使用 LangGraph 状态图、子图、条件路由与 Checkpoint（执行快照）组织规划、研读和审校；实现结构化工具调用、角色权限、预算、分层 Memory 与 SSE 重放，区分图恢复和业务幂等；实践文档解析与切分、Embedding、BM25／向量召回、RRF 融合及 Cross-encoder 重排序，使用 Qdrant 管理索引，结合 Recall@K、MRR 与引用核验评估检索效果。
+</li>
+<li><strong>数据库：</strong>熟悉 MySQL 事务、行锁、唯一约束与条件更新，能够处理并发状态流转、幂等写入及库存一致性问题。
+</li>
+<li><strong>缓存：</strong>熟悉 Redis 数据结构与 Lua 脚本，具备资格预占、限流及幂等回补实践；能够结合 Ristretto、singleflight、过期策略与持久失效任务处理热点回源和缓存一致性。
+</li>
+<li><strong>消息队列：</strong>熟悉 RabbitMQ 路由、发布确认、手动 Ack 与 Prefetch，能够结合事务 Outbox、幂等消费及重试恢复处理消息重投和消费中断。
+</li>
+<li><strong>开发工具：</strong>使用 Git、Docker Compose 管理代码与依赖环境；能够将需求拆解为可验收任务，以接口契约和编码规范约束 AI 辅助开发，通过代码审查、单元测试、集成测试、竞态检测及故障注入验证生成代码，结合日志与性能分析定位问题。
+</li>
+</ul>
+</section>
+<section class="resume-section" id="papers" aria-labelledby="papers-heading"><div class="section-heading"><span>04</span><h2 id="papers-heading">论文成果</h2></div>
+<ul>
+<li><strong>GQDet</strong>: A geometry-guided query detector with dynamic multi-scale interaction for substation visual inspection （<strong>第一作者</strong>；EAAI，中科院一区 TOP，CCF C 类；under review；<a class="repo" href="https://github.com/CsBillChang/GQDet">github.com/CsBillChang/GQDet</a>）
+<ul>
+<li>基于 DEIM 端到端 Transformer 检测框架开展结构改进，在编码端引入<strong>可变形滑窗注意力</strong>，通过可学习采样偏移与局部 Q/K/V 交互建模目标结构，结合动态门控实现多尺度特征融合。
+</li>
+<li>在解码端提出<strong>几何引导的查询可靠性校准模块</strong>，利用候选框重叠、空间分布与尺度关系，对 Object Query 的分类响应进行残差校准，改善复杂背景下的候选目标判别。
+</li>
+</ul>
+</li>
+<li><strong>D<sup>2</sup>Q-MoE</strong>: A Detector for Substation Inspection Images with Depth-Aware Mixture-of-Experts Fusion and Semantic-Relational Query Modulation （<strong>第一作者</strong>；Neurocomputing，中科院二区，CCF C 类；with editor；<a class="repo" href="https://github.com/CsBillChang/D2Q-MoE">github.com/CsBillChang/D2Q-MoE</a>）
+<ul>
+<li>设计几何与任务引导的<strong>混合专家模块（MoE）</strong>，通过 Top-2 路由聚合不同感受野的专家特征，结合目标中心与框边辅助监督学习深度特征，并以可靠性门控实现 RGB 与伪深度的跨模态融合。
+</li>
+<li>围绕 Transformer 解码器的查询预测，融合图像级类别先验与 Query 间几何关系，提出<strong>查询条件门控和语义关系调制</strong>，在保留预测框坐标的同时，自适应调整各查询的分类响应。
+</li>
+</ul>
+</li>
+</ul>
+</section>
+  </main>
+  <footer><a href="#top" aria-label="返回简历顶部">返回顶部 ↑</a><p>常铭钰 · Go后端开发 / Agent开发</p></footer>
+</div>
+</body>
+</html>
